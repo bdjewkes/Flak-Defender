@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{C522378B-CAB1-524B-DA59-643F44C3DFFB}</ProjectGuid>
+	<ProjectGuid>{9CB4BA18-B191-E57F-1BAF-EE2CAC44DDE7}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -46,7 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Destructable.cs" />
      <Compile Include="Assets\Movement\PlayerController.cs" />
+     <Compile Include="Assets\Weapons\FireWeapon.cs" />
+     <Compile Include="Assets\Weapons\Projectile.cs" />
+     <None Include="Assets\FighterModel\Info.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.2/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -11,9 +11,29 @@ public class PlayerController : MonoBehaviour {
     public float maxVelocity;
     public float maxPivotOffset;
     public float strafeRate;
-    
-    float velocity = 0;
-    
+
+    public GameObject mainThrustEffect;
+    public GameObject secondaryThrustEffect;
+
+    void Update()
+    {
+        float heave = Input.GetAxis("Heave");
+        if (heave != 0)
+        {
+            if (heave > 0) mainThrustEffect.transform.localRotation = Quaternion.Euler(new Vector3(90,0,0));
+            if (heave < 0) mainThrustEffect.transform.localRotation = Quaternion.Euler(new Vector3(-90, 0, 0));
+            mainThrustEffect.SetActive(true);
+        }
+        else mainThrustEffect.SetActive(false);
+        float sway = Input.GetAxis("Sway");
+        if (sway != 0)
+        {
+            if (sway > 0) secondaryThrustEffect.transform.localRotation = Quaternion.Euler(new Vector3(0, -90, 0));
+            if (sway < 0) secondaryThrustEffect.transform.localRotation = Quaternion.Euler(new Vector3(0, 90, 0));
+            secondaryThrustEffect.SetActive(true);
+        }
+        else secondaryThrustEffect.SetActive(false);
+    }
 
     void FixedUpdate()
     {
@@ -33,24 +53,25 @@ public class PlayerController : MonoBehaviour {
     void ApplyRotation()
     {
         //if you spin out, first rotation under control:
-        if (rigidbody.angularVelocity.magnitude > maxAngularVelocity) rigidbody.angularVelocity -= (angularVelocityRate * rigidbody.angularVelocity.normalized);
+        if (rigidbody.angularVelocity.magnitude >= maxAngularVelocity)
+        {
+            rigidbody.AddRelativeForce(angularVelocityRate * -rigidbody.angularVelocity.normalized
+                * (1 + Mathf.Pow(rigidbody.angularVelocity.magnitude - maxAngularVelocity, 2)
+                ));
+        }
+
+        float rotationalAxis = Input.GetAxis("Yaw");
+        if (Mathf.Abs(rotationalAxis) > 0)
+        {
+            if(rigidbody.angularVelocity.magnitude < maxAngularVelocity) rigidbody.AddRelativeTorque(transform.forward * -rotationalAxis * angularVelocityRate);
+        }
+        //rotation automatically stopped if you're not turning
         else
         {
-            float rotationalAxis = Input.GetAxis("Yaw");
-            if (Mathf.Abs(rotationalAxis) > 0)
-            {
-                rigidbody.angularVelocity += new Vector3(0, 0, -rotationalAxis * angularVelocityRate);
-            }
-            //rotation automatically stopped if you're not turning
-            else
-            {
-                var mag = rigidbody.angularVelocity.magnitude;
-                //break turning at twice the normal rate to make it feel a little tighter?
-                rigidbody.angularVelocity -= angularVelocityRate * 2 * rigidbody.angularVelocity.normalized;
-                if (rigidbody.angularVelocity.magnitude > mag) rigidbody.angularVelocity = new Vector3(0, 0, 0);
-            }
+            var mag = rigidbody.angularVelocity.magnitude;
+            rigidbody.AddRelativeTorque(angularVelocityRate * -rigidbody.angularVelocity.normalized);
+            if (rigidbody.angularVelocity.magnitude > mag) rigidbody.angularVelocity = new Vector3(0, 0, 0);
         }
-        
     }
     void ApplyHeave()
     {
@@ -78,7 +99,6 @@ public class PlayerController : MonoBehaviour {
 
     void ApplyBreak()
     {
-        float breakAxis = Input.GetAxis("Break");
         var mag = rigidbody.velocity.magnitude;
         rigidbody.velocity -= reverseThrustRate * rigidbody.velocity.normalized;
         if ((rigidbody.velocity + (reverseThrustRate * transform.forward)).magnitude > mag) rigidbody.velocity = new Vector3(0, 0, 0);
