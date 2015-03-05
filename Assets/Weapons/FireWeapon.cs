@@ -35,7 +35,7 @@ public class FireWeapon : MonoBehaviour {
     void LaunchWeapon()
     {
         var p = Instantiate(projectilePrefab) as GameObject;
-        p.transform.position = transform.position + transform.up * 2;
+        p.transform.position = transform.position + transform.up * 3;
         p.rigidbody.velocity = rigidbody.velocity;
         p.rigidbody.AddRelativeForce(launchForce * transform.up);
         StartCoroutine(ReloadDelay());
