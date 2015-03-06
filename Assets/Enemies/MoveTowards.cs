@@ -27,7 +27,7 @@ public class MoveTowards : MonoBehaviour {
             float angle = Mathf.Atan2(target.transform.position.y - transform.position.y, 
                 target.transform.position.x - transform.position.x) * 180 / Mathf.PI;
             transform.rotation = Quaternion.Euler(0, 0, angle-90);
-            distanceTraveled += speed * Time.deltaTime;
+            distanceTraveled += speed * GameTime.deltaTime;
             yield return null;
         }
     }

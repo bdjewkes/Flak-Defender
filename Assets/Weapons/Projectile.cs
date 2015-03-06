@@ -8,10 +8,10 @@ public class Projectile : MonoBehaviour {
     public GameObject explosionEffect;
 
 	IEnumerator Start () {
-        float startTime = Time.time;
+        float startTime = GameTime.time;
         while(true)
         {
-            if (lifespan < (Time.time - startTime)) Destroy(gameObject);
+            if (lifespan < (GameTime.time - startTime)) Destroy(gameObject);
             yield return null;
         }
 	}

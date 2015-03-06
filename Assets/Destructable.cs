@@ -35,7 +35,7 @@ public class Destructable : MonoBehaviour {
         destructionInProgress = true;
         var explode = Instantiate(explosionPrefab) as GameObject;
         explode.transform.position = transform.position;
-        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(GameTime.WaitForSeconds(0.25f));
         Destroy(gameObject);        
     }
 

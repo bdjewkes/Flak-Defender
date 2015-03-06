@@ -6,10 +6,10 @@ public class ExplosionCleanup : MonoBehaviour {
         
     IEnumerator Start()
     {
-        var startT = Time.time;
+        var startT = GameTime.time;
         while(true)
         {
-            if (Time.time - startT > timer) break;
+            if (GameTime.time - startT > timer) break;
             yield return null;
         }
         Destroy(gameObject);
