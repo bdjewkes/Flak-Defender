@@ -6,9 +6,6 @@ public class GameTime : MonoBehaviour {
     public static float time;
     public static float deltaTime;
 
-
-
-    public bool pause;
     float startTime;
     float lastFrame;
     float pausedOffset;
@@ -21,8 +18,6 @@ public class GameTime : MonoBehaviour {
     }
     void Update()
     {
-        if (pause) paused = true;
-        else if (!pause) paused = false;
         if(!paused)
         {
             if (Time.timeScale != 1) Time.timeScale = 1;
