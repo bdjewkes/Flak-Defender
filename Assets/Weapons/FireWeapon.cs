@@ -49,6 +49,7 @@ public class FireWeapon : MonoBehaviour {
     private void LaunchWeapon()
     {
         fire = false;
+        GetComponent<AudioSource>().PlayOneShot(projectilePrefab.GetComponent<Projectile>().fireSound, 0.05f);
         var p = Instantiate(projectilePrefab) as GameObject;
         p.transform.position = transform.position + transform.up * 3;
         p.rigidbody.velocity = rigidbody.velocity;
