@@ -4,8 +4,11 @@ using System.Collections;
 public class FireWeapon : MonoBehaviour {
     public GameObject projectilePrefab;
     public float launchForce;
+    public float armDistance = 3;
     public bool autoFire;
 
+    public float driftRange = 0;
+    public float driftLateral = 0;
 
     public float reloadSpeed;
     bool fire;
@@ -51,9 +54,11 @@ public class FireWeapon : MonoBehaviour {
         fire = false;
         GetComponent<AudioSource>().PlayOneShot(projectilePrefab.GetComponent<Projectile>().fireSound, 0.05f);
         var p = Instantiate(projectilePrefab) as GameObject;
-        p.transform.position = transform.position + transform.up * 3;
+        p.transform.position = transform.position + transform.up * armDistance;
         p.rigidbody.velocity = rigidbody.velocity;
         p.rigidbody.AddRelativeForce(launchForce * transform.up);
+        if (p.GetComponent<FlakProjectile>()) p.GetComponent<FlakProjectile>().detonateDistance += Random.Range(-driftRange, driftRange);
+        p.rigidbody.AddRelativeForce(Random.Range(-driftLateral, driftLateral) * transform.right);
     }
     IEnumerator ReloadDelay()
     {

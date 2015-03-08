@@ -10,6 +10,8 @@ public class Projectile : MonoBehaviour {
     public AudioClip fireSound;
     public AudioClip hitSound;
 
+    Component projectileType;
+
 	IEnumerator Start () {
         float startTime = GameTime.time;
         while(true)
@@ -18,7 +20,7 @@ public class Projectile : MonoBehaviour {
             yield return null;
         }
 	}
-	void OnCollisionEnter(Collision col)
+	public void OnCollisionEnter(Collision col)
     {
         Debug.Log("collided with " + col.gameObject.name);
         var explode = Instantiate(explosionEffect) as GameObject;

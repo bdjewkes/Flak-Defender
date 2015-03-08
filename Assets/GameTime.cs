@@ -6,13 +6,11 @@ public class GameTime : MonoBehaviour {
     public static float time;
     public static float deltaTime;
 
-    float startTime;
     float lastFrame;
     float pausedOffset;
 	
     void Awake()
     {
-        startTime = Time.time;
         pausedOffset = 0;
         deltaTime = 0;
     }
