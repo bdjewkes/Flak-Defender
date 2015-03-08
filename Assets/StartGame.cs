@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StartGame : MonoBehaviour {
     public GameObject mainCam;
@@ -7,6 +8,8 @@ public class StartGame : MonoBehaviour {
     public GameObject startUI;
 
     public AudioClip startSound;
+    public List<GameObject> startObjs;
+
 	void Awake()
     {
         GameTime.paused = true;
@@ -26,6 +29,10 @@ public class StartGame : MonoBehaviour {
         GameTime.paused = false;
         yield return new WaitForSeconds(1);
         startCam.SetActive(false);
+        foreach(var obj in startObjs)
+        {
+            obj.SetActive(true);
+        }
         mainCam.gameObject.SetActive(true);
         startUI.SetActive(false);
         

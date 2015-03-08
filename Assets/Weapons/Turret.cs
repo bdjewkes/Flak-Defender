@@ -2,11 +2,26 @@
 using System.Collections;
 
 public class Turret : MonoBehaviour {
+    public GameObject arcLeft;
+    public GameObject arcRight;
+    
     GameObject flakPrefab;
+
     void Start()
     {
         flakPrefab = GetComponent<FireWeapon>().projectilePrefab;
     }
+
+    void Update()
+    {
+        var lLeft = arcLeft.GetComponent<LineRenderer>();
+        var lRight = arcRight.GetComponent<LineRenderer>();
+        lLeft.SetPosition(0, transform.position);
+        lLeft.SetPosition(1, GetMaximumDriftVector(false, transform.position));
+        lRight.SetPosition(0, transform.position);
+        lRight.SetPosition(1, GetMaximumDriftVector(true, transform.position));
+    }
+
 
     Vector3 GetMaximumDriftVector(bool right, Vector3 origin)
     {
@@ -19,6 +34,8 @@ public class Turret : MonoBehaviour {
             *(flak.detonateDistance + launcher.driftRange); //max range;
         return vector;
     }
+    
+    
 
 
 

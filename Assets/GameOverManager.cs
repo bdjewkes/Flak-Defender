@@ -25,6 +25,10 @@ public class GameOverManager : MonoBehaviour {
     {
         gameOver = true;
         yield return new WaitForSeconds(1.5f);
+        foreach(var obj in GetComponent<StartGame>().startObjs)
+        {
+            obj.SetActive(false);
+        }
         Camera.main.gameObject.SetActive(false);
         GOObj.SetActive(true);
         GOCam.SetActive(true);

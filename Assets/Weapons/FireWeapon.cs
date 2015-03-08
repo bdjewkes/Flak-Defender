@@ -54,7 +54,7 @@ public class FireWeapon : MonoBehaviour {
         fire = false;
         GetComponent<AudioSource>().PlayOneShot(projectilePrefab.GetComponent<Projectile>().fireSound, 0.05f);
         var p = Instantiate(projectilePrefab) as GameObject;
-        p.transform.position = transform.position + transform.up * armDistance;
+        p.transform.position = new Vector3(transform.position.x, transform.position.y, 0) + transform.up * armDistance;
         p.rigidbody.velocity = rigidbody.velocity;
         p.rigidbody.AddRelativeForce(launchForce * transform.up);
         if (p.GetComponent<FlakProjectile>()) p.GetComponent<FlakProjectile>().detonateDistance += Random.Range(-driftRange, driftRange);
