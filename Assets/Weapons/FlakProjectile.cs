@@ -6,7 +6,10 @@ public class FlakProjectile : Projectile
     
     public float detonateDistance;
     public float damageRadius;
-    
+    void Awake()
+    {
+        base.Awake();
+    }
 
     IEnumerator Start()
     {

@@ -2,6 +2,8 @@
 using System.Collections;
 
 public class Projectile : MonoBehaviour {
+    public static GameObject projectileParent;
+
 
     public float lifespan;
     public float damage;
@@ -11,6 +13,16 @@ public class Projectile : MonoBehaviour {
     public AudioClip hitSound;
 
     Component projectileType;
+
+    public void Awake()
+    {
+        if(projectileParent == null)
+        {
+            projectileParent = FindObjectOfType<ProjectileParent>().gameObject;
+        }
+        transform.parent = projectileParent.transform;
+    }
+
 
 	IEnumerator Start () {
         float startTime = GameTime.time;
